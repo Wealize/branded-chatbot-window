@@ -4,6 +4,6 @@ import ReactDOM from 'react-dom'
 import Chat from './components/Chat'
 
 ReactDOM.render(
-  <Chat {...(window.chatProps)}/>,
+  <Chat {...(window.chatbotSettings)}/>,
   document.getElementById('chatbotContainer')
 )

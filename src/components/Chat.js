@@ -10,27 +10,26 @@ class Chat extends React.Component {
   state = { messageList: [] }
 
   constructor(props) {
+    const { host, webhook } = props
+
     super(props)
 
-    if ('chatbotConfig' in props) {
-      const { chatbotConfig: { host, webhook } } = props
-      this.chatbot = new ChatbotService(host, webhook)
-    }
+    this.chatbot = new ChatbotService(host, webhook)
   }
 
   async onMessageWasSent (message) {
-    let data = null
     const { messageList } = this.state
 
-    if (this.chatbot) {
-      data = await this.chatbot.fetchResponse(message)
-    }
+    const data = await this.chatbot.fetchResponse(message)
 
     this.setState({
       messageList: [
         ...messageList,
         message,
-        ...(data ? [data] : [])
+        ...(data && data.message
+          ? [data.message]
+          : []
+        )
       ],
     })
   }
@@ -52,28 +51,19 @@ class Chat extends React.Component {
 }
 
 Chat.propTypes = {
+  host: PropTypes.string.isRequired,
+  webhook: PropTypes.string.isRequired,
+  agentProfile: PropTypes.shape({
+    teamName: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+  }).isRequired,
   theme: PropTypes.shape({
     brandColor: PropTypes.string,
-  }),
-  agentProfile: PropTypes.shape({
-    teamName: PropTypes.string,
-    imageUrl: PropTypes.string,
-  }),
-  chatbotConfig: PropTypes.shape({
-    host: PropTypes.string,
-    webhook: PropTypes.string,
   }),
   showEmoji: PropTypes.bool,
 }
 
 Chat.defaultProps = {
-  theme: {
-    brandColor: 'magenta'
-  },
-  agentProfile: {
-    teamName: 'Chat title',
-    imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-  },
   showEmoji: true,
 }
 

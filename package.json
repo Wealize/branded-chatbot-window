@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
