@@ -1,9 +1,7 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: {
-    'bundle.js': ['./src/index.js'],
-  },
+  entry: ['@babel/polyfill', './src/index.js'],
   output: {
     filename: 'bundle.min.js',
   },

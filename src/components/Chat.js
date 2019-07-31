@@ -65,6 +65,7 @@ Chat.propTypes = {
 
 Chat.defaultProps = {
   showEmoji: true,
+  theme: {},
 }
 
 export default Chat
