@@ -1,6 +1,6 @@
 class ChatbotService {
-  constructor (host, webhookId) {
-    this.endpoint = `https://${host}/webhook_web/${webhookId}/`
+  constructor (endpoint) {
+    this.endpoint = endpoint
   }
 
   fetchResponse (text) {

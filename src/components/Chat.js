@@ -10,24 +10,25 @@ class Chat extends React.Component {
   state = { messageList: [] }
 
   constructor(props) {
-    const { host, webhook } = props
+    const { chatbotEndpoint } = props
 
     super(props)
 
-    this.chatbot = new ChatbotService(host, webhook)
+    this.chatbot = new ChatbotService(chatbotEndpoint)
   }
 
   async onMessageWasSent (message) {
     const { messageList } = this.state
+    const { data: { text } } = message
 
-    const data = await this.chatbot.fetchResponse(message)
+    const data = await this.chatbot.fetchResponse(text)
 
     this.setState({
       messageList: [
         ...messageList,
         message,
         ...(data && data.message
-          ? [data.message]
+          ? [{ author: 'them', ...data.message }]
           : []
         )
       ],
@@ -51,8 +52,7 @@ class Chat extends React.Component {
 }
 
 Chat.propTypes = {
-  host: PropTypes.string.isRequired,
-  webhook: PropTypes.string.isRequired,
+  chatbotEndpoint: PropTypes.string.isRequired,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,

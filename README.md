@@ -8,8 +8,7 @@ Just include this snippet of code inside your HTML and set your configuration va
 
 ```javascript
 window.chatbotSettings = {
-  host: 'https://your-endpoint.here',
-  webhook: 'WEBHOOK_ID',
+  chatbotEndpoint: 'https://your-endpoint.here/webhooks/webhook_id',
   agentProfile: {
     teamName: 'Your team name',
     imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
@@ -26,8 +25,7 @@ window.chatbotSettings = {
 
 |variable|type|required|description|
 |:-------|:--:|:------:|:----------|
-|`host`|`string`|yes|The host you want to connect your chatbot to.|
-|`webhook`|`string`|yes|The webhook ID to identify your chatbot.|
+|`chatbotEndpoint`|`string`|yes|The endpoint you want to connect your chatbot to.|
 |`agentProfile`|`object`|yes|Information about the chatbot visible to the users.|
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`teamName`|`string`|yes|Visible chatbot name in the application.|
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`imageUrl`|`string`|yes|An avatar for your chatbot.|
