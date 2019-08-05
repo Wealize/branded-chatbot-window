@@ -1,9 +1,14 @@
+const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
+const { version } = require('./package.json')
+const bundleVersion = version.replace(/\./g, '')
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
   output: {
-    filename: 'bundle.min.js',
+    filename: `bundle.min.js`,
+    path: path.join(__dirname, `dist/${bundleVersion}`)
   },
   module: {
     rules: [

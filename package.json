@@ -1,6 +1,6 @@
 {
   "name": "branded-chatbot-window",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
     "color": "^3.1.2",
@@ -14,9 +14,11 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/polyfill": "^7.4.4",
+    "aws-sdk": "^2.503.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "css-loader": "^3.1.0",
+    "dotenv": "^8.0.0",
     "file-loader": "^4.1.0",
     "react-scripts": "3.0.1",
     "style-loader": "^0.23.1",
@@ -26,7 +28,8 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "webpack --config webpack.config.js --mode production",
+    "release": "yarn build && node uploadReleaseToS3.js"
   },
   "eslintConfig": {
     "extends": "react-app"
