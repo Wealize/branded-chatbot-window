@@ -1,5 +1,7 @@
 # Branded Chatbot Window
 
+![version](https://img.shields.io/badge/version-1.0.3-blue)
+
 A simple chatbot window written in React and based on `react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
 
 ## Usage
@@ -35,4 +37,9 @@ window.chatbotSettings = {
 
 ## Releasing new versions
 
-WIP
+If you want to publish a new version of the chatbot window to our CDN servers, you must configure an [IAM Access Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html?icmpid=docs_iam_console) and populate your `.env` file with the provided `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_S3_BUCKET`.
+
+> ### **IMPORTANT**
+> Check that your `package.json` has a newer version number for the release!
+
+Then just run the following command: `yarn release`
