@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
@@ -7,7 +9,7 @@ const bundleVersion = version.replace(/\./g, '')
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
   output: {
-    filename: `bundle.min.js`,
+    filename: `branded-chatbot-window.min.js`,
     path: path.join(__dirname, `dist/${bundleVersion}`)
   },
   module: {
@@ -31,7 +33,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|mp3)$/,
-        use: ['file-loader'],
+        use: ['url-loader'],
       },
     ],
   },

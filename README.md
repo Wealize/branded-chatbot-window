@@ -1,6 +1,6 @@
 # Branded Chatbot Window
 
-![version](https://img.shields.io/badge/version-1.0.3-blue)
+![version](https://img.shields.io/badge/version-1.0.4-blue)
 
 A simple chatbot window written in React and based on `react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
 
@@ -20,7 +20,7 @@ window.chatbotSettings = {
   }
 };
 
-(function(){var w=window;var d=document;var l=function(){var x=d.getElementsByTagName('script')[0];var c=d.createElement('div');c.id='chatbotContainer';x.parentNode.insertBefore(c,x);var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://d1hbk1yt8xmke0.cloudfront.net/103/bundle.min.js';x.parentNode.insertBefore(s,x);};if(d.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}})();
+(function(){var w=window;var d=document;var l=function(){var x=d.getElementsByTagName('script')[0];var c=d.createElement('div');c.id='chatbotContainer';x.parentNode.insertBefore(c,x);var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://d1hbk1yt8xmke0.cloudfront.net/104/branded-chatbot-window.min.js';x.parentNode.insertBefore(s,x);};if(d.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}})();
 ```
 
 ## Configuration
@@ -37,7 +37,7 @@ window.chatbotSettings = {
 
 ## Releasing new versions
 
-If you want to publish a new version of the chatbot window to our CDN servers, you must configure an [IAM Access Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html?icmpid=docs_iam_console) and populate your `.env` file with the provided `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_S3_BUCKET`.
+If you want to publish a new version of the chatbot window to our CDN servers, you must configure an [IAM Access Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html?icmpid=docs_iam_console) and populate your `.env` file with the provided `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_S3_BUCKET`.
 
 > ### **IMPORTANT**
 > Check that your `package.json` has a newer version number for the release!
