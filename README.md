@@ -1,6 +1,6 @@
 # Branded Chatbot Window
 
-![version](https://img.shields.io/badge/version-1.0.4-blue)
+![version](https://img.shields.io/badge/version-1.1.0-blue)
 
 A simple chatbot window written in React and based on `react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
 

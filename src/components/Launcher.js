@@ -1,7 +1,7 @@
 import React from 'react'
 import Color from 'color'
 import styled, { css, ThemeProvider } from 'styled-components'
-import { Launcher } from 'react-chat-window'
+import { Launcher } from '@theneonproject/react-chat-window'
 
 const LauncherContainer = styled.div`
   ${(props) => {
