@@ -28,7 +28,7 @@ class Chat extends React.Component {
       messageList: [
         ...messageList,
         message,
-        ...(data && data.messages ? this.getMessages(data) : []),
+        ...(data && data.message ? this.getMessages(data) : []),
       ],
     });
   }
@@ -36,7 +36,7 @@ class Chat extends React.Component {
   getMessages(data) {
     let messages = [];
 
-    data.messages.forEach(function(message) {
+    data.message.forEach(function(message) {
       messages.push({author: 'them', ...message.message});
     });
 
