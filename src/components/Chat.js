@@ -1,61 +1,52 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Launcher from './Launcher';
-import ChatbotService from '../services/ChatbotService';
+import Launcher from './Launcher'
+import ChatbotService from '../services/ChatbotService'
+import MessageService from '../services/MessageService'
 
 class Chat extends React.Component {
-  chatbot = null;
-  state = {messageList: []};
+  chatbot = null
+  state = { messageList: [] }
 
   constructor(props) {
-    const {chatbotEndpoint} = props;
+    const { chatbotEndpoint } = props
 
-    super(props);
+    super(props)
 
-    this.chatbot = new ChatbotService(chatbotEndpoint);
+    this.chatbot = new ChatbotService(chatbotEndpoint)
   }
 
-  async onMessageWasSent(message) {
-    const {messageList} = this.state;
+  async onMessageWasSent (message) {
+    const { messageList } = this.state
     const {
-      data: {text},
-    } = message;
+      data: { text },
+    } = message
 
-    const data = await this.chatbot.fetchResponse(text);
+    const data = await this.chatbot.fetchResponse(text)
 
     this.setState({
       messageList: [
         ...messageList,
         message,
-        ...(data && data.message ? this.getMessages(data) : []),
+        ...(data && data.message ? MessageService.prepareMessages(data) : []),
       ],
-    });
+    })
   }
 
-  getMessages(data) {
-    let messages = [];
-
-    data.message.forEach(function(message) {
-      messages.push({author: 'them', ...message.message});
-    });
-
-    return messages;
-  }
-
-  render() {
-    const {theme, agentProfile, showEmoji} = this.props;
-    const {messageList} = this.state;
+  render () {
+    const { theme, agentProfile, showEmoji } = this.props
+    const { messageList } = this.state
 
     return (
       <Launcher
-        theme={theme}
-        agentProfile={agentProfile}
-        showEmoji={showEmoji}
-        onMessageWasSent={this.onMessageWasSent.bind(this)}
-        messageList={messageList}
+        theme={ theme }
+        agentProfile={ agentProfile }
+        showEmoji={ showEmoji }
+        onMessageWasSent={ this.onMessageWasSent.bind(this) }
+        messageList={ messageList }
       />
-    );
+    )
   }
 }
 
@@ -69,11 +60,11 @@ Chat.propTypes = {
     brandColor: PropTypes.string,
   }),
   showEmoji: PropTypes.bool,
-};
+}
 
 Chat.defaultProps = {
   showEmoji: true,
   theme: {},
-};
+}
 
-export default Chat;
+export default Chat
