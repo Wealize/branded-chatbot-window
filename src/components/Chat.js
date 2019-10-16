@@ -22,13 +22,18 @@ class Chat extends React.Component {
     const { data: { text } } = message
 
     const data = await this.chatbot.fetchResponse(text)
+    let messages = []
+
+    data.messages.forEach(function(message){
+      messages.push({ author: 'them', ...message.message })
+    })
 
     this.setState({
       messageList: [
         ...messageList,
         message,
-        ...(data && data.message
-          ? [{ author: 'them', ...data.message }]
+        ...(data && data.messages
+          ? messages
           : []
         )
       ],
