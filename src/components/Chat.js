@@ -40,11 +40,11 @@ class Chat extends React.Component {
 
     return (
       <Launcher
-        theme={ theme }
-        agentProfile={ agentProfile }
-        showEmoji={ showEmoji }
-        onMessageWasSent={ this.onMessageWasSent.bind(this) }
-        messageList={ messageList }
+        theme={theme}
+        agentProfile={agentProfile}
+        showEmoji={showEmoji}
+        onMessageWasSent={this.onMessageWasSent.bind(this)}
+        messageList={messageList}
       />
     )
   }
