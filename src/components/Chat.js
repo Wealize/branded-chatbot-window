@@ -29,7 +29,7 @@ class Chat extends React.Component {
       messageList: [
         ...messageList,
         message,
-        ...MessageService.prepareMessages(data.message)
+        ...MessageService.prepareMessages(data.messages)
       ],
     })
   }

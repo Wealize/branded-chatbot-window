@@ -1,6 +1,6 @@
 class MessageService {
-  static prepareMessages (message) {
-    return message.map(message => ({ author: 'them', ...message.message }))
+  static prepareMessages (messages) {
+    return messages.map(message => ({ author: 'them', ...message }))
   }
 }
 export default MessageService
