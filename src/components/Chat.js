@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Launcher from './Launcher'
 import ChatbotService from '../services/ChatbotService'
-
+import MessageService from '../services/MessageService'
 
 class Chat extends React.Component {
   chatbot = null
@@ -19,7 +19,9 @@ class Chat extends React.Component {
 
   async onMessageWasSent (message) {
     const { messageList } = this.state
-    const { data: { text } } = message
+    const {
+      data: { text },
+    } = message
 
     const data = await this.chatbot.fetchResponse(text)
 
@@ -27,10 +29,7 @@ class Chat extends React.Component {
       messageList: [
         ...messageList,
         message,
-        ...(data && data.message
-          ? [{ author: 'them', ...data.message }]
-          : []
-        )
+        ...MessageService.prepareMessages(data.messages)
       ],
     })
   }
