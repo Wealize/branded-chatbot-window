@@ -1,12 +1,6 @@
 class MessageService {
-  static prepareMessages (data) {
-    let messages = []
-
-    data.message.forEach (function (message) {
-      messages.push ({ author: 'them', ...message.message })
-    });
-
-    return messages
+  static prepareMessages (message) {
+    return message.map(message => ({ author: 'them', ...message.message }))
   }
 }
 export default MessageService
