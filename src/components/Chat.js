@@ -35,7 +35,7 @@ class Chat extends React.Component {
   }
 
   render () {
-    const { theme, agentProfile, showEmoji } = this.props
+    const { theme, agentProfile, showEmoji, showFileIcon } = this.props
     const { messageList } = this.state
 
     return (
@@ -43,6 +43,7 @@ class Chat extends React.Component {
         theme={theme}
         agentProfile={agentProfile}
         showEmoji={showEmoji}
+        showFileIcon={showFileIcon}
         onMessageWasSent={this.onMessageWasSent.bind(this)}
         messageList={messageList}
       />
@@ -60,10 +61,12 @@ Chat.propTypes = {
     brandColor: PropTypes.string,
   }),
   showEmoji: PropTypes.bool,
+  showFileIcon: PropTypes.bool,
 }
 
 Chat.defaultProps = {
   showEmoji: true,
+  showFileIcon: true,
   theme: {},
 }
 

@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: "ubuntu-latest"
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Set env file
+      run: 'printf "AWS_ACCESS_KEY_ID=$ACCESS\nAWS_SECRET_ACCESS_KEY=$SECRET\nAWS_S3_BUCKET=$BUCKET" > .env'
+      env:
+        ACCESS: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        SECRET: ${{ secrets.AWS_SECRET_KEY }}
+        BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+
+    - name: Release
+      run: yarn release
