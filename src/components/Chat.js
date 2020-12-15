@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Launcher from './Launcher'
-import ChatbotService from '../services/ChatbotService'
 import MessageService from '../services/MessageService'
 
 class Chat extends React.Component {
@@ -14,8 +13,35 @@ class Chat extends React.Component {
 
     super(props)
 
-    this.chatbot = new ChatbotService(chatbotEndpoint)
+    this.socket = new WebSocket(chatbotEndpoint);
+
+    this.socket.onmessage = (event => this.onMessage(event))
+    this.socket.onclose = this.onClose()
+    this.socket.onopen = this.onOpen()
   }
+
+  onOpen () {
+    console.log('websocket open')
+  }
+
+  onClose () {
+    console.log('websocket close')
+  }
+
+  sendMessage (message) {
+      this.socket.send(message)
+  }
+
+  onMessage (event) {
+    const { messageList } = this.state
+
+    this.setState({
+      messageList: [
+        ...messageList,
+        ...MessageService.prepareMessages([JSON.parse(event.data)])
+      ],
+    })
+  };
 
   async onMessageWasSent (message) {
     const { messageList } = this.state
@@ -23,13 +49,33 @@ class Chat extends React.Component {
       data: { text },
     } = message
 
-    const data = await this.chatbot.fetchResponse(text)
+    this.sendMessage(text)
 
     this.setState({
       messageList: [
         ...messageList,
-        message,
-        ...MessageService.prepareMessages(data.messages)
+        message
+      ],
+    })
+  }
+
+  async onFilesSelected (files) {
+    const file = files[0]
+    const { messageList } = this.state
+    const message = {
+      author: 'them',
+      type: 'file',
+      data: {
+        fileName: file.name
+      }
+    }
+
+    this.sendMessage(file)
+
+    this.setState({
+      messageList: [
+        ...messageList,
+        message
       ],
     })
   }
@@ -45,6 +91,7 @@ class Chat extends React.Component {
         showEmoji={showEmoji}
         showFileIcon={showFileIcon}
         onMessageWasSent={this.onMessageWasSent.bind(this)}
+        onFilesSelected={this.onFilesSelected.bind(this)}
         messageList={messageList}
       />
     )
