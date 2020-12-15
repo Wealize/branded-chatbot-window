@@ -80,6 +80,27 @@ class Chat extends React.Component {
     })
   }
 
+  async showWelcomeMessage () {
+    const welcomeMessage = this.props.welcomeMessage
+    const { messageList } = this.state
+
+    if(welcomeMessage){
+      const message = {
+        type: 'text',
+        author: 'them',
+        data: {text: welcomeMessage}
+      }
+
+      this.setState({
+        messageList: [
+          ...messageList,
+          message
+        ],
+      })
+    }
+
+  }
+
   render () {
     const { theme, agentProfile, showEmoji, showFileIcon } = this.props
     const { messageList } = this.state
@@ -92,6 +113,7 @@ class Chat extends React.Component {
         showFileIcon={showFileIcon}
         onMessageWasSent={this.onMessageWasSent.bind(this)}
         onFilesSelected={this.onFilesSelected.bind(this)}
+        showWelcomeMessage={this.showWelcomeMessage.bind(this)}
         messageList={messageList}
       />
     )
@@ -100,6 +122,7 @@ class Chat extends React.Component {
 
 Chat.propTypes = {
   chatbotEndpoint: PropTypes.string.isRequired,
+  welcomeMessage: PropTypes.string,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
