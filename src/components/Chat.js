@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Cookies from 'universal-cookie';
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
@@ -13,20 +14,31 @@ class Chat extends React.Component {
 
     super(props)
 
-    this.socket = new WebSocket(chatbotEndpoint);
+    if (!this.getCookie()){
+      this.setCookie()
+    }
+
+    this.socket = new WebSocket(chatbotEndpoint)
 
     this.socket.onmessage = (event => this.onMessage(event))
     this.socket.onclose = this.onClose()
     this.socket.onopen = this.onOpen()
   }
 
-  onOpen () {
-    console.log('websocket open')
+  getCookie () {
+    const cookies = new Cookies();
+    return cookies.get('coloqio-webchat-user-id')
   }
 
-  onClose () {
-    console.log('websocket close')
+  setCookie () {
+    const uuid = require('uuid/v4')
+    const cookies = new Cookies()
+    cookies.set('coloqio-webchat-user-id', uuid(), { path: '/' })
   }
+
+  onOpen () {}
+
+  onClose () {}
 
   sendMessage (message) {
       this.socket.send(message)
