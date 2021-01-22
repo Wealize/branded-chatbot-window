@@ -14,11 +14,13 @@ class Chat extends React.Component {
 
     super(props)
 
-    if (!this.getCookie()){
-      this.setCookie()
+    let user_id = this.getCookie()
+
+    if (!user_id){
+      user_id = this.setCookie()
     }
 
-    this.socket = new WebSocket(chatbotEndpoint)
+    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${user_id}`)
 
     this.socket.onmessage = (event => this.onMessage(event))
     this.socket.onclose = this.onClose()
@@ -33,7 +35,9 @@ class Chat extends React.Component {
   setCookie () {
     const uuid = require('uuid/v4')
     const cookies = new Cookies()
-    cookies.set('coloqio-webchat-user-id', uuid(), { path: '/' })
+    const user_uuid = uuid()
+    cookies.set('coloqio-webchat-user-id', user_uuid, { path: '/' })
+    return user_uuid
   }
 
   onOpen () {}
