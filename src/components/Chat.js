@@ -1,84 +1,98 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Cookies from 'universal-cookie';
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
 
-class Chat extends React.Component {
-  chatbot = null
-  state = { messageList: [] }
 
-  constructor(props) {
-    const { chatbotEndpoint } = props
 
-    super(props)
+const Chat = (props) => {
+  const {
+    theme,
+    agentProfile,
+    showEmoji,
+    showFileIcon,
+    chatbotEndpoint,
+    welcomeMessage,
+    startButton
+  } = props
 
-    let user_id = this.getCookie()
+  const [messageList, setMessageList] = useState([])
+  const [socket, setSocket] = useState(null)
+
+  useEffect(() => {
+    let user_id = getCookie('coloqio-webchat-user-id')
 
     if (!user_id){
-      user_id = this.setCookie()
+      uuid = generateUniqueId()
+      user_id = setCookie(
+        'coloqio-webchat-user-id',
+        uuid
+      )
     }
 
-    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${user_id}`)
+    connection = new WebSocket(
+      `${chatbotEndpoint}?user_id=${user_id}`,
+    )
+    connection.onopen = onOpen()
+    connection.onmessage = (event => onMessage(event))
+    connection.onclose = onClose()
 
-    this.socket.onmessage = (event => this.onMessage(event))
-    this.socket.onclose = this.onClose()
-    this.socket.onopen = this.onOpen()
+    setSocket(connection)
+  }, [])
 
-  }
-
-  getCookie () {
-    const cookies = new Cookies();
-    return cookies.get('coloqio-webchat-user-id')
-  }
-
-  setCookie () {
+  const generateUniqueId = () => {
     const uuid = require('uuid/v4')
+    return uuid()
+  }
+
+  const getCookie = (cookieName) => {
     const cookies = new Cookies()
-    const user_uuid = uuid()
-    cookies.set('coloqio-webchat-user-id', user_uuid, { path: '/' })
-    return user_uuid
+    return cookies.get(cookieName)
   }
 
-  onOpen () {}
+  const setCookie = (cookieName, cookieValue) => {
+    const cookies = new Cookies()
+    cookies.set(cookieName, cookieValue, { path: '/' })
 
-  onClose () {}
-
-  sendMessage (message) {
-      this.socket.send(message)
+    return cookieValue
   }
 
-  onMessage (event) {
-    const { messageList } = this.state
+  const onOpen = () => {}
 
-    this.setState({
-      messageList: [
+  const onClose = () => {}
+
+  const sendMessage = (message) => {
+    socket.send(message)
+  }
+
+  const onMessage = (event) => {
+    setMessageList(
+      [
         ...messageList,
         ...MessageService.prepareMessages([JSON.parse(event.data)])
-      ],
-    })
-  };
-
-  async onMessageWasSent (message) {
-    const { messageList } = this.state
-    const {
-      data: { text, value },
-    } = message
-
-    this.sendMessage(value || text)
-
-    this.setState({
-      messageList: [
-        ...messageList,
-        message
-      ],
-    })
+      ]
+    )
   }
 
-  async onFilesSelected (files) {
+  async const onMessageWasSent = (message) => {
+    const {
+      data: { text, value }
+    } = message
+
+    sendMessage(value || text)
+
+    setMessageList(
+      [
+        ...messageList,
+        message
+      ]
+    )
+  }
+
+  async const onFilesSelected = (files) => {
     const file = files[0]
-    const { messageList } = this.state
     const message = {
       author: 'them',
       type: 'file',
@@ -89,41 +103,33 @@ class Chat extends React.Component {
 
     this.sendMessage(file)
 
-    this.setState({
-      messageList: [
+    setMessageList(
+      [
         ...messageList,
         message
-      ],
-    })
+      ]
+    )
   }
 
-  async showWelcomeMessage () {
-    const welcomeMessage = this.props.welcomeMessage
-    const startButton = this.props.startButton
-    const { messageList } = this.state
-
-    if(welcomeMessage && !startButton){
+  async const showWelcomeMessage = () => {
+    if (welcomeMessage && !startButton) {
       const message = {
         type: 'text',
         author: 'them',
         data: {text: welcomeMessage}
       }
 
-      this.setState({
-        messageList: [
+      setMessageList(
+        [
           ...messageList,
           message
-        ],
-      })
+        ]
+      )
     }
 
   }
 
-  async showStartButton () {
-    const welcomeMessage = this.props.welcomeMessage
-    const startButton = this.props.startButton
-    const { messageList } = this.state
-
+  async const showStartButton = () => {
     if (startButton) {
       this.setState({
         messageList: [
@@ -153,24 +159,19 @@ class Chat extends React.Component {
 
   }
 
-  render () {
-    const { theme, agentProfile, showEmoji, showFileIcon } = this.props
-    const { messageList } = this.state
-
-    return (
-      <Launcher
-        theme={theme}
-        agentProfile={agentProfile}
-        showEmoji={showEmoji}
-        showFileIcon={showFileIcon}
-        onMessageWasSent={this.onMessageWasSent.bind(this)}
-        onFilesSelected={this.onFilesSelected.bind(this)}
-        showWelcomeMessage={this.showWelcomeMessage.bind(this)}
-        showStartButton={this.showStartButton.bind(this)}
-        messageList={messageList}
-      />
-    )
-  }
+  return (
+    <Launcher
+      theme={theme}
+      agentProfile={agentProfile}
+      showEmoji={showEmoji}
+      showFileIcon={showFileIcon}
+      onMessageWasSent={onMessageWasSent}
+      onFilesSelected={onFilesSelected}
+      showWelcomeMessage={showWelcomeMessage}
+      showStartButton={showStartButton}
+      messageList={messageList}
+    />
+  )
 }
 
 Chat.propTypes = {
