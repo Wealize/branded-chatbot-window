@@ -1618,10 +1618,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@wealize/react-chat-window@^1.2.8":
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.2.8.tgz#16f783c870db6352ef78eb3ebce3df153a13a164"
-  integrity sha512-GfVwL2AvBFaOgRvknXxuSbQdFsVW8GVPuQEXJtuJc4rLMX2VbyvefIDubreB7q1h1tW4hBkZPE6+Jr/mIiqsYA==
+"@wealize/react-chat-window@^1.2.11":
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.2.11.tgz#8fe17f3e77c46f319fcc57e4e90e66e9a4c95f95"
+  integrity sha512-LSOuYyj70VAlBv5MSOAAiwUzXjwTtsceDuBUoLWm4kpLR1p8YA8BJSnu2EtQBZGpWygQZMtRlQrS1+SGoUYe4Q==
   dependencies:
     "@types/react-audio-player" "^0.11.0"
     emoji-js "3.2.2"

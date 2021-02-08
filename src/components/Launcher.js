@@ -33,6 +33,22 @@ const LauncherContainer = styled.div`
       & .sc-message--content.sent .sc-message--text {
         background-color: ${brandColor.rgb().alpha(0.5).string()};
       }
+
+      & .sc-quick-replies-block {
+        background-color: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
+      }
+
+      & .sc-quick-reply-button {
+        border: 1px solid ${brandColor.rgb().string()};
+        color: ${brandColor.rgb().string()};
+        background-color: white;
+      }
+
+      & .sc-quick-reply-button:hover {
+        border: 1px solid white;
+        color: white;
+        background-color: ${brandColor.rgb().string()};
+      }
     `
   }}
 `

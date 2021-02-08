@@ -154,7 +154,13 @@ class Chat extends React.Component {
   }
 
   render () {
-    const { theme, agentProfile, showEmoji, showFileIcon } = this.props
+    const {
+      theme,
+      agentProfile,
+      showEmoji,
+      showFileIcon,
+      hideUserInputWithQuickReplies
+    } = this.props
     const { messageList } = this.state
 
     return (
@@ -167,6 +173,7 @@ class Chat extends React.Component {
         onFilesSelected={this.onFilesSelected.bind(this)}
         showWelcomeMessage={this.showWelcomeMessage.bind(this)}
         showStartButton={this.showStartButton.bind(this)}
+        hideUserInputWithQuickReplies={hideUserInputWithQuickReplies}
         messageList={messageList}
       />
     )
@@ -177,6 +184,7 @@ Chat.propTypes = {
   chatbotEndpoint: PropTypes.string.isRequired,
   welcomeMessage: PropTypes.string,
   startButton: PropTypes.string,
+  hideUserInputWithQuickReplies: PropTypes.bool,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
@@ -191,6 +199,7 @@ Chat.propTypes = {
 Chat.defaultProps = {
   showEmoji: true,
   showFileIcon: true,
+  hideUserInputWithQuickReplies: false,
   theme: {},
 }
 
