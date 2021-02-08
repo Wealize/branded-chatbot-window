@@ -25,6 +25,7 @@ class Chat extends React.Component {
     this.socket.onmessage = (event => this.onMessage(event))
     this.socket.onclose = this.onClose()
     this.socket.onopen = this.onOpen()
+
   }
 
   getCookie () {
@@ -62,10 +63,10 @@ class Chat extends React.Component {
   async onMessageWasSent (message) {
     const { messageList } = this.state
     const {
-      data: { text },
+      data: { text, value },
     } = message
 
-    this.sendMessage(text)
+    this.sendMessage(value || text)
 
     this.setState({
       messageList: [
@@ -98,9 +99,10 @@ class Chat extends React.Component {
 
   async showWelcomeMessage () {
     const welcomeMessage = this.props.welcomeMessage
+    const startButton = this.props.startButton
     const { messageList } = this.state
 
-    if(welcomeMessage){
+    if(welcomeMessage && !startButton){
       const message = {
         type: 'text',
         author: 'them',
@@ -111,6 +113,40 @@ class Chat extends React.Component {
         messageList: [
           ...messageList,
           message
+        ],
+      })
+    }
+
+  }
+
+  async showStartButton () {
+    const welcomeMessage = this.props.welcomeMessage
+    const startButton = this.props.startButton
+    const { messageList } = this.state
+
+    if (startButton) {
+      this.setState({
+        messageList: [
+          ...messageList,
+          ...MessageService.prepareMessages([
+            {
+              author: 'them',
+              type: 'text',
+              data: {
+                text: welcomeMessage || '¡Bienvenido!'
+              },
+              quickReplies: [
+                {
+                  author: 'me',
+                  type: 'text',
+                  data: {
+                    text: startButton,
+                    value: 'start'
+                  }
+                }
+              ]
+            }
+          ])
         ],
       })
     }
@@ -130,6 +166,7 @@ class Chat extends React.Component {
         onMessageWasSent={this.onMessageWasSent.bind(this)}
         onFilesSelected={this.onFilesSelected.bind(this)}
         showWelcomeMessage={this.showWelcomeMessage.bind(this)}
+        showStartButton={this.showStartButton.bind(this)}
         messageList={messageList}
       />
     )
@@ -139,6 +176,7 @@ class Chat extends React.Component {
 Chat.propTypes = {
   chatbotEndpoint: PropTypes.string.isRequired,
   welcomeMessage: PropTypes.string,
+  startButton: PropTypes.string,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
