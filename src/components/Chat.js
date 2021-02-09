@@ -6,18 +6,30 @@ import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
 
 class Chat extends React.Component {
-  chatbot = null
-  state = { messageList: [] }
-
-  constructor(props) {
+  constructor (props) {
     const { chatbotEndpoint } = props
 
     super(props)
 
-    let user_id = this.getCookie()
+    this.state = {
+      messageList: []
+    }
 
-    if (!user_id){
-      user_id = this.setCookie()
+    let messageFromCookie = this.getCookie('message-list')
+
+    if (messageFromCookie) {
+      this.state.messageList = messageFromCookie
+    }
+
+    let user_id = this.getCookie('coloqio-webchat-user-id')
+
+    if (!user_id) {
+      const uuid = require('uuid/v4')
+      user_id = this.setCookie(
+        'coloqio-webchat-user-id',
+        uuid(),
+        60 * 60 * 24
+      )
     }
 
     this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${user_id}`)
@@ -25,28 +37,38 @@ class Chat extends React.Component {
     this.socket.onmessage = (event => this.onMessage(event))
     this.socket.onclose = this.onClose()
     this.socket.onopen = this.onOpen()
-
   }
 
-  getCookie () {
-    const cookies = new Cookies();
-    return cookies.get('coloqio-webchat-user-id')
+  componentDidUpdate () {
+    this.setCookie(
+      'message-list',
+      this.state.messageList,
+      3600
+    )
   }
 
-  setCookie () {
-    const uuid = require('uuid/v4')
+  getCookie (cookieName) {
     const cookies = new Cookies()
-    const user_uuid = uuid()
-    cookies.set('coloqio-webchat-user-id', user_uuid, { path: '/' })
-    return user_uuid
+    return cookies.get(cookieName)
   }
 
-  onOpen () {}
+  setCookie (cookieName, cookieValue, maxAgeSeconds) {
+    const cookies = new Cookies()
+    cookies.set(
+      cookieName,
+      cookieValue,
+      { path: '/', maxAge: maxAgeSeconds }
+    )
 
-  onClose () {}
+    return cookieValue
+  }
+
+  onOpen () { }
+
+  onClose () { }
 
   sendMessage (message) {
-      this.socket.send(message)
+    this.socket.send(message)
   }
 
   onMessage (event) {
@@ -102,11 +124,11 @@ class Chat extends React.Component {
     const startButton = this.props.startButton
     const { messageList } = this.state
 
-    if(welcomeMessage && !startButton){
+    if (welcomeMessage && !startButton) {
       const message = {
         type: 'text',
         author: 'them',
-        data: {text: welcomeMessage}
+        data: { text: welcomeMessage }
       }
 
       this.setState({
