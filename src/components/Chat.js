@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie'
+import { LZMA as compression } from 'lzma/src/lzma-c'
+import { LZMA as decompression } from 'lzma/src/lzma-d'
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
@@ -45,6 +47,9 @@ class Chat extends React.Component {
       this.state.messageList,
       3600
     )
+
+    let compressed_data = compression.compress(JSON.stringify(this.state.messageList), 9)
+    console.log(decompression.decompress(compressed_data))
   }
 
   getCookie (cookieName) {
