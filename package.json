@@ -6,7 +6,6 @@
     "@wealize/react-chat-window": "^1.2.12",
     "color": "^3.1.2",
     "core-js": "3",
-    "lzma": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
