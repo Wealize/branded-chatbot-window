@@ -9,7 +9,10 @@ import { LocalStorageService, CookieService } from '../services/StorageService'
 class Chat extends React.Component {
   constructor (props) {
     super(props)
-    const { chatbotEndpoint } = props
+    const {
+      chatbotEndpoint,
+      userTimeout
+    } = props
 
     this.state = {
       messageList: []
@@ -17,7 +20,7 @@ class Chat extends React.Component {
 
     this.cookieManager = new CookieService()
 
-    this.initialiseUserId()
+    this.initialiseUserId(userTimeout)
     this.initialiseMessageList()
     this.initialiseWebsocket(chatbotEndpoint)
   }
@@ -217,6 +220,7 @@ Chat.propTypes = {
   }),
   showEmoji: PropTypes.bool,
   showFileIcon: PropTypes.bool,
+  userTimeout: PropTypes.number
 }
 
 Chat.defaultProps = {
@@ -224,6 +228,7 @@ Chat.defaultProps = {
   showFileIcon: true,
   hideUserInputWithQuickReplies: false,
   theme: {},
+  userTimeout: -1
 }
 
 export default Chat

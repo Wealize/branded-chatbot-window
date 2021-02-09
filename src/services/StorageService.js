@@ -37,7 +37,7 @@ class CookieService {
             value,
             {
                 path: '/',
-                maxAge: maxAgeSeconds
+                ...maxAgeSeconds > 0 && {maxAge: maxAgeSeconds}
             }
         )
     }
