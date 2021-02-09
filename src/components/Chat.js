@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { uuid } from 'uuid/v4'
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
 import { LocalStorageService, CookieService } from '../services/StorageService'
+
 
 class Chat extends React.Component {
   constructor (props) {
@@ -15,42 +15,48 @@ class Chat extends React.Component {
       messageList: []
     }
 
-    this.cookieManager = CookieService()
+    this.cookieManager = new CookieService()
 
-    let userId = this.getUserId()
-    this.initialiseMessageList(userId)
-    this.initialiseWebsocket(chatbotEndpoint, userId)
+    this.initialiseUserId()
+    this.initialiseMessageList()
+    this.initialiseWebsocket(chatbotEndpoint)
   }
 
   componentDidUpdate (prevProps, prevState) {
     if (this.state.messageList !== prevState.messageList) {
-      LocalStorageService.setItem('message-list', this.state.messageList)
+      let conversation = {
+        userId: this.userId,
+        messages: this.state.messageList
+      }
+
+      LocalStorageService.setItem('message-list', conversation)
     }
   }
 
-  initialiseWebsocket (chatbotEndpoint, userId) {
-    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${userId}`)
+  initialiseWebsocket (chatbotEndpoint) {
+    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${this.userId}`)
     this.socket.onmessage = (event => this.onMessage(event))
     this.socket.onclose = (() => {})
     this.socket.onopen = (() => {})
   }
 
-  initialiseMessageList (userId) {
+  initialiseMessageList () {
     let conversation = LocalStorageService.getItem('message-list')
 
     if (!conversation) {
       this.state.messageList = []
-    } else if (conversation.userId !== userId){
+    } else if (conversation.userId !== this.userId){
       LocalStorageService.removeItem('message-list')
     } else {
       this.state.messageList = conversation.messages
     }
   }
 
-  getUserId () {
+  initialiseUserId () {
     let userId = this.cookieManager.getCookie('coloqio-webchat-user-id')
 
     if (!userId) {
+      const uuid = require('uuid/v4')
       userId = uuid()
       this.cookieManager.setCookie(
         'coloqio-webchat-user-id',
@@ -59,7 +65,7 @@ class Chat extends React.Component {
       )
     }
 
-    return userId
+    this.userId = userId
   }
 
   sendMessage (message) {

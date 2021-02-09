@@ -3,13 +3,15 @@ import Cookies from 'universal-cookie'
 
 class LocalStorageService {
     static getItem (key) {
-        return localStorage.getItem(key)
+        let item = localStorage.getItem(key)
+
+        return item ? JSON.parse(item) : item
     }
 
     static setItem (key, value) {
         localStorage.setItem(
             key,
-            value
+            JSON.stringify(value)
         )
     }
 
