@@ -1,76 +1,66 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Cookies from 'universal-cookie'
-import { LZMA as compression } from 'lzma/src/lzma-c'
-import { LZMA as decompression } from 'lzma/src/lzma-d'
+import { uuid } from 'uuid/v4'
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
+import { LocalStorageService, CookieService } from '../services/StorageService'
 
 class Chat extends React.Component {
   constructor (props) {
-    const { chatbotEndpoint } = props
-
     super(props)
+    const { chatbotEndpoint } = props
 
     this.state = {
       messageList: []
     }
 
-    let messageFromCookie = this.getCookie('message-list')
+    this.cookieManager = CookieService()
 
-    if (messageFromCookie) {
-      this.state.messageList = messageFromCookie
+    let userId = this.getUserId()
+    this.initialiseMessageList(userId)
+    this.initialiseWebsocket(chatbotEndpoint, userId)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.messageList !== prevState.messageList) {
+      LocalStorageService.setItem('message-list', this.state.messageList)
     }
+  }
 
-    let user_id = this.getCookie('coloqio-webchat-user-id')
+  initialiseWebsocket (chatbotEndpoint, userId) {
+    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${userId}`)
+    this.socket.onmessage = (event => this.onMessage(event))
+    this.socket.onclose = (() => {})
+    this.socket.onopen = (() => {})
+  }
 
-    if (!user_id) {
-      const uuid = require('uuid/v4')
-      user_id = this.setCookie(
+  initialiseMessageList (userId) {
+    let conversation = LocalStorageService.getItem('message-list')
+
+    if (!conversation) {
+      this.state.messageList = []
+    } else if (conversation.userId !== userId){
+      LocalStorageService.removeItem('message-list')
+    } else {
+      this.state.messageList = conversation.messages
+    }
+  }
+
+  getUserId () {
+    let userId = this.cookieManager.getCookie('coloqio-webchat-user-id')
+
+    if (!userId) {
+      userId = uuid()
+      this.cookieManager.setCookie(
         'coloqio-webchat-user-id',
-        uuid(),
+        userId,
         60 * 60 * 24
       )
     }
 
-    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${user_id}`)
-
-    this.socket.onmessage = (event => this.onMessage(event))
-    this.socket.onclose = this.onClose()
-    this.socket.onopen = this.onOpen()
+    return userId
   }
-
-  componentDidUpdate () {
-    this.setCookie(
-      'message-list',
-      this.state.messageList,
-      3600
-    )
-
-    let compressed_data = compression.compress(JSON.stringify(this.state.messageList), 9)
-    console.log(decompression.decompress(compressed_data))
-  }
-
-  getCookie (cookieName) {
-    const cookies = new Cookies()
-    return cookies.get(cookieName)
-  }
-
-  setCookie (cookieName, cookieValue, maxAgeSeconds) {
-    const cookies = new Cookies()
-    cookies.set(
-      cookieName,
-      cookieValue,
-      { path: '/', maxAge: maxAgeSeconds }
-    )
-
-    return cookieValue
-  }
-
-  onOpen () { }
-
-  onClose () { }
 
   sendMessage (message) {
     this.socket.send(message)
