@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
+import { MESSAGE_LIST, USER_ID } from '../constants/storage'
 import { LocalStorageService, CookieService } from '../services/StorageService'
 
 
@@ -32,7 +33,7 @@ class Chat extends React.Component {
         messages: this.state.messageList
       }
 
-      LocalStorageService.setItem('coloqio-message-list', conversation)
+      LocalStorageService.setItem(MESSAGE_LIST, conversation)
     }
   }
 
@@ -44,25 +45,25 @@ class Chat extends React.Component {
   }
 
   initialiseMessageList () {
-    let conversation = LocalStorageService.getItem('coloqio-message-list')
+    let conversation = LocalStorageService.getItem(MESSAGE_LIST)
 
     if (!conversation) {
       this.state.messageList = []
     } else if (conversation.userId !== this.userId){
-      LocalStorageService.removeItem('message-list')
+      LocalStorageService.removeItem(MESSAGE_LIST)
     } else {
       this.state.messageList = conversation.messages
     }
   }
 
   initialiseUserId (userTimeout) {
-    let userId = this.cookieManager.getCookie('coloqio-webchat-user-id')
+    let userId = this.cookieManager.getCookie(USER_ID)
 
     if (!userId) {
       const uuid = require('uuid/v4')
       userId = uuid()
       this.cookieManager.setCookie(
-        'coloqio-webchat-user-id',
+        USER_ID,
         userId,
         userTimeout
       )
