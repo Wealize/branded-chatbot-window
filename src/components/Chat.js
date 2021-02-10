@@ -32,7 +32,7 @@ class Chat extends React.Component {
         messages: this.state.messageList
       }
 
-      LocalStorageService.setItem('message-list', conversation)
+      LocalStorageService.setItem('coloqio-message-list', conversation)
     }
   }
 
@@ -44,7 +44,7 @@ class Chat extends React.Component {
   }
 
   initialiseMessageList () {
-    let conversation = LocalStorageService.getItem('message-list')
+    let conversation = LocalStorageService.getItem('coloqio-message-list')
 
     if (!conversation) {
       this.state.messageList = []
@@ -55,7 +55,7 @@ class Chat extends React.Component {
     }
   }
 
-  initialiseUserId () {
+  initialiseUserId (userTimeout) {
     let userId = this.cookieManager.getCookie('coloqio-webchat-user-id')
 
     if (!userId) {
@@ -64,7 +64,7 @@ class Chat extends React.Component {
       this.cookieManager.setCookie(
         'coloqio-webchat-user-id',
         userId,
-        60 * 60 * 24
+        userTimeout
       )
     }
 
@@ -228,7 +228,7 @@ Chat.defaultProps = {
   showFileIcon: true,
   hideUserInputWithQuickReplies: false,
   theme: {},
-  userTimeout: -1
+  userTimeout: 2147483647
 }
 
 export default Chat
