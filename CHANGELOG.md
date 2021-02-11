@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.1] - 2021-02-11
+
+### Added
+
 - [As a webchat user I want to maintain the session for 6 hours in order to consult the requested information.](https://wealize.atlassian.net/browse/MAL-229)
 
 ## [1.2.0] - 2020-12-15
