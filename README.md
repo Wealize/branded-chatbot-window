@@ -35,6 +35,7 @@ window.chatbotSettings = {
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`brandColor`|`string`||A base color to change header, buttons, and messages `background-color`.|
 |`showEmoji`|`bool`|no|Whether or not to show the emoji button in the input bar. Defaults to `true`.|
 |`showFileIcon`|`bool`|no|Whether or not to show the file button in the input bar. Defaults to `true`.|
+|`userTimeout`|`integer`|no|Number of seconds until a new conversation is created. Defaults to `2147483647`|
 
 ## Releasing new versions
 
