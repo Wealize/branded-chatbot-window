@@ -1,52 +1,79 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Cookies from 'universal-cookie';
 
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
+import { MESSAGE_LIST, USER_ID } from '../constants/storage'
+import { LocalStorageService, CookieService } from '../services/StorageService'
+
 
 class Chat extends React.Component {
-  chatbot = null
-  state = { messageList: [] }
-
-  constructor(props) {
-    const { chatbotEndpoint } = props
-
+  constructor (props) {
     super(props)
+    const {
+      chatbotEndpoint,
+      userTimeout
+    } = props
 
-    let user_id = this.getCookie()
-
-    if (!user_id){
-      user_id = this.setCookie()
+    this.state = {
+      messageList: []
     }
 
-    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${user_id}`)
+    this.cookieManager = new CookieService()
 
+    this.initialiseUserId(userTimeout)
+    this.initialiseMessageList()
+    this.initialiseWebsocket(chatbotEndpoint)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.messageList !== prevState.messageList) {
+      let conversation = {
+        userId: this.userId,
+        messages: this.state.messageList
+      }
+
+      LocalStorageService.setItem(MESSAGE_LIST, conversation)
+    }
+  }
+
+  initialiseWebsocket (chatbotEndpoint) {
+    this.socket = new WebSocket(`${chatbotEndpoint}?user_id=${this.userId}`)
     this.socket.onmessage = (event => this.onMessage(event))
-    this.socket.onclose = this.onClose()
-    this.socket.onopen = this.onOpen()
-
+    this.socket.onclose = (() => {})
+    this.socket.onopen = (() => {})
   }
 
-  getCookie () {
-    const cookies = new Cookies();
-    return cookies.get('coloqio-webchat-user-id')
+  initialiseMessageList () {
+    let conversation = LocalStorageService.getItem(MESSAGE_LIST)
+
+    if (!conversation) {
+      this.state.messageList = []
+    } else if (conversation.userId !== this.userId){
+      LocalStorageService.removeItem(MESSAGE_LIST)
+    } else {
+      this.state.messageList = conversation.messages
+    }
   }
 
-  setCookie () {
-    const uuid = require('uuid/v4')
-    const cookies = new Cookies()
-    const user_uuid = uuid()
-    cookies.set('coloqio-webchat-user-id', user_uuid, { path: '/' })
-    return user_uuid
+  initialiseUserId (userTimeout) {
+    let userId = this.cookieManager.getCookie(USER_ID)
+
+    if (!userId) {
+      const uuid = require('uuid/v4')
+      userId = uuid()
+      this.cookieManager.setCookie(
+        USER_ID,
+        userId,
+        userTimeout
+      )
+    }
+
+    this.userId = userId
   }
-
-  onOpen () {}
-
-  onClose () {}
 
   sendMessage (message) {
-      this.socket.send(message)
+    this.socket.send(message)
   }
 
   onMessage (event) {
@@ -102,11 +129,11 @@ class Chat extends React.Component {
     const startButton = this.props.startButton
     const { messageList } = this.state
 
-    if(welcomeMessage && !startButton){
+    if (welcomeMessage && !startButton) {
       const message = {
         type: 'text',
         author: 'them',
-        data: {text: welcomeMessage}
+        data: { text: welcomeMessage }
       }
 
       this.setState({
@@ -194,6 +221,7 @@ Chat.propTypes = {
   }),
   showEmoji: PropTypes.bool,
   showFileIcon: PropTypes.bool,
+  userTimeout: PropTypes.number
 }
 
 Chat.defaultProps = {
@@ -201,6 +229,7 @@ Chat.defaultProps = {
   showFileIcon: true,
   hideUserInputWithQuickReplies: false,
   theme: {},
+  userTimeout: 2147483647
 }
 
 export default Chat
