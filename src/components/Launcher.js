@@ -26,8 +26,22 @@ const LauncherContainer = styled.div`
         background-color: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
       }
 
+      & .sc-user-input--text {
+        background-color: initial;
+      }
+
       & .sc-user-input.active {
         background-color: white;
+      }
+
+      & .sc-message--img {
+        width: 90%;
+        height: auto;
+      }
+
+      & .sc-message--video {
+        width: 100%;
+        height: 100%;
       }
 
       & .sc-message--content.sent .sc-message--text {
