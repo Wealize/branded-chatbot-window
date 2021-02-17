@@ -34,6 +34,16 @@ const LauncherContainer = styled.div`
         background-color: white;
       }
 
+      & .sc-message--img {
+        width: 90%;
+        height: auto;
+      }
+
+      & .sc-message--video {
+        width: 100%;
+        height: 100%;
+      }
+
       & .sc-message--content.sent .sc-message--text {
         background-color: ${brandColor.rgb().alpha(0.5).string()};
       }
