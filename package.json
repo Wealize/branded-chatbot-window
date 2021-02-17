@@ -1,6 +1,6 @@
 {
   "name": "branded-chatbot-window",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "dependencies": {
     "@wealize/react-chat-window": "1.3.0",
