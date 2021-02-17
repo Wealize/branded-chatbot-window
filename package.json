@@ -3,7 +3,7 @@
   "version": "1.4",
   "private": true,
   "dependencies": {
-    "@wealize/react-chat-window": "^1.2.12",
+    "@wealize/react-chat-window": "file:/Users/daniel/Desktop/react-chat-window",
     "color": "^3.1.2",
     "core-js": "3",
     "prop-types": "^15.7.2",
