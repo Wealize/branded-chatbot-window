@@ -36,6 +36,7 @@ window.chatbotSettings = {
 |`showEmoji`|`bool`|no|Whether or not to show the emoji button in the input bar. Defaults to `true`.|
 |`showFileIcon`|`bool`|no|Whether or not to show the file button in the input bar. Defaults to `true`.|
 |`userTimeout`|`integer`|no|Number of seconds until a new conversation is created. Defaults to `2147483647`|
+|`isWebView`|`boolean`|no|Enable webchat for webview in apps. Defaults to `false`|
 
 ## Releasing new versions
 
