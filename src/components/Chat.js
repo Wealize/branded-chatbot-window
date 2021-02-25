@@ -107,7 +107,7 @@ class Chat extends React.Component {
     const file = files[0]
     const { messageList } = this.state
     const message = {
-      author: 'them',
+      author: 'me',
       type: 'file',
       data: {
         fileName: file.name
