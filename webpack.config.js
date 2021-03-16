@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin");
 
 const { version } = require('./package.json')
 const bundleVersion = version.replace(/\./g, '')
@@ -43,6 +43,6 @@ module.exports = {
     }
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new TerserPlugin()],
   },
 }
