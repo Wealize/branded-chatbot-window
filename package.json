@@ -2,15 +2,26 @@
   "name": "branded-chatbot-window",
   "version": "1.4.7",
   "private": true,
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "umd",
+    "css"
+  ],
   "dependencies": {
     "@wealize/react-chat-window": "1.3.3",
     "color": "^3.1.2",
     "core-js": "3",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "styled-components": "^4.3.2",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -26,7 +37,9 @@
     "terser-webpack-plugin": "^5.1.1",
     "url-loader": "^2.1.0",
     "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "scripts": {
     "dev": "react-scripts start",
