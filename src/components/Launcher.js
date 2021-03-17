@@ -8,7 +8,15 @@ const LauncherContainer = styled.div`
     const brandColor = Color(props.theme.brandColor);
 
     return css`
-      & .sc-launcher,
+      & .sc-launcher {
+        background-color: ${brandColor.rgb().string()};
+        z-index: 999999;
+      }
+
+      & .sc-chat-window {
+        z-index: 999999;
+      }
+
       & .sc-header {
         background-color: ${brandColor.rgb().string()};
       }
