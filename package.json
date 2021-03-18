@@ -1,7 +1,6 @@
 {
-  "name": "branded-chatbot-window",
-  "version": "1.4.7",
-  "private": true,
+  "name": "@wealize/branded-chatbot",
+  "version": "1.4.6-3",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -36,8 +35,8 @@
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^5.1.1",
     "url-loader": "^2.1.0",
-    "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6",
+    "webpack": "5.26.3",
+    "webpack-cli": "4.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -45,8 +44,7 @@
     "dev": "react-scripts start",
     "build:webpack": "webpack --config webpack.config.js --mode production",
     "build:nwb": "nwb build-react-component --copy-files",
-    "release:webpack": "yarn run build:webpack && node uploadReleaseToS3.js",
-    "release:nwb": "yarn run build:nwb && yarn publish"
+    "release:webpack": "yarn run build:webpack && node uploadReleaseToS3.js"
   },
   "eslintConfig": {
     "extends": "react-app"
