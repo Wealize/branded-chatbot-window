@@ -1,6 +1,7 @@
 {
   "name": "@wealize/branded-chatbot",
   "version": "1.4.6-3",
+  "license": "MIT",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
