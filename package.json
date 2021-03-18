@@ -43,9 +43,10 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "webpack --config webpack.config.js --mode production",
-    "nwb-build": "nwb build-react-component --copy-files",
-    "release": "npm build && node uploadReleaseToS3.js"
+    "build:webpack": "webpack --config webpack.config.js --mode production",
+    "build:nwb": "nwb build-react-component --copy-files",
+    "release:webpack": "yarn run build:webpack && node uploadReleaseToS3.js",
+    "release:nwb": "yarn run build:nwb && yarn publish"
   },
   "eslintConfig": {
     "extends": "react-app"

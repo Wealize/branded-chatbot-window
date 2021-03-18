@@ -9,12 +9,12 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Setup Node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: '10.x'
+        node-version: '12.x'
 
     - name: Install dependencies
       run: yarn install
@@ -27,4 +27,4 @@ jobs:
         BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
     - name: Release
-      run: yarn release
+      run: yarn release:webpack

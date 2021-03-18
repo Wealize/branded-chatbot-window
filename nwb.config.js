@@ -4,6 +4,7 @@ module.exports = {
     esModules: true,
     umd: {
       global: 'coloqioWebchat',
+      entry: './src/umd.js',
       externals: {
         react: 'React'
       }

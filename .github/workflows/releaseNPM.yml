@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: "ubuntu-latest"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Release
+      run: yarn release:nwb
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
