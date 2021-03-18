@@ -20,7 +20,10 @@ jobs:
     - name: Install dependencies
       run: yarn install
 
+    - name: Build package
+      run: yarn run build:nwb
+
     - name: Release
-      run: yarn release:nwb
+      run: yarn publish --no-git-tag-version --access public 
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

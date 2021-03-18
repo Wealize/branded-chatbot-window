@@ -27,4 +27,4 @@ jobs:
         BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
     - name: Release
-      run: yarn release:webpack
+      run: yarn release
