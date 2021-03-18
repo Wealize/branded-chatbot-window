@@ -30,18 +30,18 @@
     "babel-plugin-styled-components": "^1.10.6",
     "css-loader": "^3.1.0",
     "dotenv": "^8.0.0",
+    "html-webpack-plugin": "^5.3.1",
     "nwb": "^0.25.2",
-    "react-scripts": "4.0.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^5.1.1",
     "url-loader": "^2.1.0",
     "webpack": "5.26.3",
-    "webpack-cli": "4.5.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "webpack-cli": "4.5.0"
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "webpack-cli serve --mode development",
     "build:webpack": "webpack --config webpack.config.js --mode production",
     "build:nwb": "nwb build-react-component --copy-files",
     "release": "yarn run build:webpack && node uploadReleaseToS3.js"
