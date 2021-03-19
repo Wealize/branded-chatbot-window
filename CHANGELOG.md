@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+##  [1.4.8] - 2021-03-19
+
+- [workflow to publish package and improve the code]()
+
 ##  [1.4.7] - 2021-03-17
 
 - [Fixing z-index]
