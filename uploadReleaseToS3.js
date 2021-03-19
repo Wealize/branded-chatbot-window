@@ -28,7 +28,8 @@ fs.readdir(folderPath, (err, files) => {
       s3.putObject({
         Bucket: AWS_S3_BUCKET,
         Key: `${bundleVersion}/${fileName}`,
-        Body: fileContent
+        Body: fileContent,
+        ContentType: 'application/javascript'
       }).promise().then(() => {
         console.log(`Successfully uploaded ${fileName}`)
       }).catch(console.log)
