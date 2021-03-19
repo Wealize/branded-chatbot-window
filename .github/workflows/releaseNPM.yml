@@ -24,6 +24,6 @@ jobs:
       run: yarn run build:nwb
 
     - name: Release
-      run: yarn publish --no-git-tag-version --access public 
+      run: yarn publish --no-git-tag-version --non-interactive --access public 
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
