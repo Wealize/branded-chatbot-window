@@ -1,16 +1,27 @@
 {
-  "name": "branded-chatbot-window",
+  "name": "@wealize/branded-chatbot-window",
   "version": "1.4.7",
-  "private": true,
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "umd",
+    "css"
+  ],
   "dependencies": {
     "@wealize/react-chat-window": "1.3.3",
     "color": "^3.1.2",
     "core-js": "3",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "styled-components": "^4.3.2",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -20,17 +31,21 @@
     "babel-plugin-styled-components": "^1.10.6",
     "css-loader": "^3.1.0",
     "dotenv": "^8.0.0",
-    "react-scripts": "4.0.2",
+    "html-webpack-plugin": "^5.3.1",
+    "nwb": "^0.25.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^2.1.3",
+    "terser-webpack-plugin": "^5.1.1",
     "url-loader": "^2.1.0",
-    "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6"
+    "webpack": "5.26.3",
+    "webpack-cli": "4.5.0"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "webpack --config webpack.config.js --mode production",
-    "release": "yarn build && node uploadReleaseToS3.js"
+    "dev": "webpack-cli serve --mode development",
+    "build:webpack": "webpack --config webpack.config.js --mode production",
+    "build:nwb": "nwb build-react-component --copy-files",
+    "release": "yarn run build:webpack && node uploadReleaseToS3.js"
   },
   "eslintConfig": {
     "extends": "react-app"

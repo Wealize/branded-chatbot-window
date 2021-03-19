@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import Launcher from './Launcher'
 import MessageService from '../services/MessageService'
 import { MESSAGE_LIST, USER_ID } from '../constants/storage'
@@ -60,8 +62,7 @@ class Chat extends React.Component {
     let userId = this.cookieManager.getCookie(USER_ID)
 
     if (!userId) {
-      const uuid = require('uuid/v4')
-      userId = uuid()
+      userId = uuidv4()
       this.cookieManager.setCookie(
         USER_ID,
         userId,

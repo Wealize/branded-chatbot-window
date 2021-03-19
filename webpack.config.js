@@ -1,13 +1,14 @@
 require('dotenv').config()
 
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { version } = require('./package.json')
 const bundleVersion = version.replace(/\./g, '')
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: ['@babel/polyfill', './index.js'],
   output: {
     filename: `branded-chatbot-window.min.js`,
     path: path.join(__dirname, `dist/${bundleVersion}`)
@@ -43,6 +44,19 @@ module.exports = {
     }
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new TerserPlugin()],
   },
+  devServer: {
+    host: 'localhost',
+    port: 3000,
+    open: true,
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 500,
+      poll: 1000
+    }
+  },
+  plugins: [new HtmlWebpackPlugin({
+    template: './public/index.html',
+  })]
 }
