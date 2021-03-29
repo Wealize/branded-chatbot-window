@@ -34,7 +34,7 @@ const LauncherContainer = styled.div`
         background-color: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
       }
 
-      & .sc-user-input--text {
+      & .sc-user-input input.sc-user-input--text {
         background-color: initial;
       }
 
