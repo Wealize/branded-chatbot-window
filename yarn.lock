@@ -1307,10 +1307,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@wealize/react-chat-window@^1.3.5":
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.3.5.tgz#6f969f39960f0af461f9ce15903dbc0a83fdc435"
-  integrity sha512-hl9cD4Zf1HXgGl/ffUflmQvFdIUEQ73bVATbR8Ctu5wxTZFSm8wnovsNkSzgDWZD6uwDe7celHaj30K6L1NHwQ==
+"@wealize/react-chat-window@1.3.6":
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.3.6.tgz#ae82ead052c3cb1eeec44705524f4dabe65a88fe"
+  integrity sha512-6kkSIzDot6rood9scNO30HYNPjMUDZUSwO447Z9x9WTgdD/s52rqF/WGOvHqy9GrnJDmRzJUx4NYAlh9PyAeTw==
   dependencies:
     "@types/react-audio-player" "^0.11.0"
     emoji-js "3.2.2"
