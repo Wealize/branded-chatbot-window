@@ -17,8 +17,8 @@ const LauncherContainer = styled.div`
   }}
 `
 
-export default ({ theme, ...props }) => (
-  <ThemeProvider theme={theme}>
+export default ({ ...props }) => (
+  <ThemeProvider>
     <LauncherContainer>
       <Launcher {...props} />
     </LauncherContainer>
