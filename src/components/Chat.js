@@ -217,7 +217,7 @@ Chat.propTypes = {
   hideUserInputWithQuickReplies: PropTypes.bool,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+    teamExplanation: PropTypes.string
   }).isRequired,
   theme: PropTypes.shape({
     brandColor: PropTypes.string,
