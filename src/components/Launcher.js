@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styled, { css, ThemeProvider } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Launcher } from '@wealize/react-chat-window'
 
 const LauncherContainer = styled.div`
