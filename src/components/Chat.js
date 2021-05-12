@@ -183,7 +183,6 @@ class Chat extends React.Component {
 
   render () {
     const {
-      theme,
       agentProfile,
       showEmoji,
       showFileIcon,
@@ -194,7 +193,6 @@ class Chat extends React.Component {
 
     return (
       <Launcher
-        theme={theme}
         isWebView={isWebView}
         agentProfile={agentProfile}
         showEmoji={showEmoji}
@@ -217,11 +215,8 @@ Chat.propTypes = {
   hideUserInputWithQuickReplies: PropTypes.bool,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+    teamExplanation: PropTypes.string
   }).isRequired,
-  theme: PropTypes.shape({
-    brandColor: PropTypes.string,
-  }),
   showEmoji: PropTypes.bool,
   showFileIcon: PropTypes.bool,
   userTimeout: PropTypes.number,
@@ -232,7 +227,6 @@ Chat.defaultProps = {
   showEmoji: true,
   showFileIcon: true,
   hideUserInputWithQuickReplies: false,
-  theme: {},
   userTimeout: 2147483647,
   isWebView: false
 }
