@@ -1,6 +1,6 @@
 # Branded Chatbot Window
 
-![version](https://img.shields.io/badge/version-1.5.3-blue)
+![version](https://img.shields.io/badge/version-1.5.4-blue)
 
 A simple chatbot window written in React and based on `react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
 
@@ -17,7 +17,7 @@ window.chatbotSettings = {
   }
 };
 
-(function(){var w=window;var d=document;var l=function(){var x=d.getElementsByTagName('script')[0];var c=d.createElement('div');c.id='chatbotContainer';x.parentNode.insertBefore(c,x);var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://d1hbk1yt8xmke0.cloudfront.net/153/branded-chatbot-window.min.js';x.parentNode.insertBefore(s,x);};if(d.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}})();
+(function(){var w=window;var d=document;var l=function(){var x=d.getElementsByTagName('script')[0];var c=d.createElement('div');c.id='chatbotContainer';x.parentNode.insertBefore(c,x);var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://d1hbk1yt8xmke0.cloudfront.net/latest/branded-chatbot-window.min.js';x.parentNode.insertBefore(s,x);};if(d.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}})();
 ```
 
 ## Configuration
