@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updating react-chat window version]()
+- [Fixing github actions regarding s3 upload automation]()
+
 ## [1.5.3] - 2021-05-12
 
 - [Updating react-chat-window version]()
