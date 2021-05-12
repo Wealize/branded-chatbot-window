@@ -33,6 +33,15 @@ fs.readdir(folderPath, (err, files) => {
       }).promise().then(() => {
         console.log(`Successfully uploaded ${fileName}`)
       }).catch(console.log)
+
+      s3.putObject({
+        Bucket: AWS_S3_BUCKET,
+        Key: `latest/${fileName}`,
+        Body: fileContent,
+        ContentType: 'application/javascript'
+      }).promise().then(() => {
+        console.log(`Successfully uploaded ${fileName} to latest directory`)
+      }).catch(console.log)
     })
   }
 })
