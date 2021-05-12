@@ -18,9 +18,7 @@ const LauncherContainer = styled.div`
 `
 
 export default ({ ...props }) => (
-  <ThemeProvider>
-    <LauncherContainer>
-      <Launcher {...props} />
-    </LauncherContainer>
-  </ThemeProvider>
+  <LauncherContainer>
+    <Launcher {...props} />
+  </LauncherContainer>
 )
