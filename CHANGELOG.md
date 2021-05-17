@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updating react-chat window version]()
+- [Add message counter]()
+
 ## [1.5.4] - 2021-05-12
 
 - [Updating react-chat window version]()

@@ -18,7 +18,8 @@ class Chat extends React.Component {
     } = props
 
     this.state = {
-      messageList: []
+      messageList: [],
+      newMessagesCount: 0
     }
 
     this.cookieManager = new CookieService()
@@ -29,10 +30,11 @@ class Chat extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.messageList !== prevState.messageList) {
+    if (this.state.messageList !== prevState.messageList || this.state.newMessagesCount !== prevState.newMessagesCount) {
       let conversation = {
         userId: this.userId,
-        messages: this.state.messageList
+        messages: this.state.messageList,
+        newMessagesCount: this.state.newMessagesCount
       }
 
       LocalStorageService.setItem(MESSAGE_LIST, conversation)
@@ -55,6 +57,7 @@ class Chat extends React.Component {
       LocalStorageService.removeItem(MESSAGE_LIST)
     } else {
       this.state.messageList = conversation.messages
+      this.state.newMessagesCount = conversation.newMessagesCount || 0
     }
   }
 
@@ -78,13 +81,16 @@ class Chat extends React.Component {
   }
 
   onMessage (event) {
-    const { messageList } = this.state
+    const { messageList, newMessagesCount } = this.state
+
+    const preparedMessages = MessageService.prepareMessages(JSON.parse(event.data))
 
     this.setState({
       messageList: [
         ...messageList,
-        ...MessageService.prepareMessages([JSON.parse(event.data)])
+        ...preparedMessages
       ],
+      newMessagesCount: preparedMessages.length > 1 ? (newMessagesCount === 0 ? preparedMessages.length - 1: newMessagesCount + preparedMessages.length) : (newMessagesCount === 0 ? 0 : newMessagesCount + 1)
     })
   };
 
@@ -101,6 +107,7 @@ class Chat extends React.Component {
         ...messageList,
         message
       ],
+      newMessagesCount: 0
     })
   }
 
@@ -122,6 +129,7 @@ class Chat extends React.Component {
         ...messageList,
         message
       ],
+      newMessagesCount: 0
     })
   }
 
@@ -178,57 +186,68 @@ class Chat extends React.Component {
         ],
       })
     }
+  }
 
+  _handleReadMessages () {
+    this.setState({
+      newMessagesCount: 0
+    })
   }
 
   render () {
     const {
       agentProfile,
+      hideUserInputWithQuickReplies,
+      isOpen,
+      isWebView,
       showEmoji,
       showFileIcon,
-      hideUserInputWithQuickReplies,
-      isWebView
     } = this.props
-    const { messageList } = this.state
+    const { messageList, newMessagesCount } = this.state
 
     return (
       <Launcher
-        isWebView={isWebView}
         agentProfile={agentProfile}
+        handleReadMessages={this._handleReadMessages.bind(this)}
+        hideUserInputWithQuickReplies={hideUserInputWithQuickReplies}
+        isOpen={isOpen}
+        isWebView={isWebView}
+        messageList={messageList}
+        newMessagesCount={newMessagesCount}
+        onFilesSelected={this.onFilesSelected.bind(this)}
+        onMessageWasSent={this.onMessageWasSent.bind(this)}
         showEmoji={showEmoji}
         showFileIcon={showFileIcon}
-        onMessageWasSent={this.onMessageWasSent.bind(this)}
-        onFilesSelected={this.onFilesSelected.bind(this)}
-        showWelcomeMessage={this.showWelcomeMessage.bind(this)}
         showStartButton={this.showStartButton.bind(this)}
-        hideUserInputWithQuickReplies={hideUserInputWithQuickReplies}
-        messageList={messageList}
+        showWelcomeMessage={this.showWelcomeMessage.bind(this)}
       />
     )
   }
 }
 
 Chat.propTypes = {
-  chatbotEndpoint: PropTypes.string.isRequired,
-  welcomeMessage: PropTypes.string,
-  startButton: PropTypes.string,
-  hideUserInputWithQuickReplies: PropTypes.bool,
   agentProfile: PropTypes.shape({
     teamName: PropTypes.string.isRequired,
     teamExplanation: PropTypes.string
   }).isRequired,
+  chatbotEndpoint: PropTypes.string.isRequired,
+  hideUserInputWithQuickReplies: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  isWebView: PropTypes.bool,
   showEmoji: PropTypes.bool,
   showFileIcon: PropTypes.bool,
+  startButton: PropTypes.string,
   userTimeout: PropTypes.number,
-  isWebView: PropTypes.bool
+  welcomeMessage: PropTypes.string,
 }
 
 Chat.defaultProps = {
+  hideUserInputWithQuickReplies: false,
+  isOpen: false,
+  isWebView: false,
   showEmoji: true,
   showFileIcon: true,
-  hideUserInputWithQuickReplies: false,
   userTimeout: 2147483647,
-  isWebView: false
 }
 
 export default Chat
