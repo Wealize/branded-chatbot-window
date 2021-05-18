@@ -142,6 +142,7 @@ class Chat extends React.Component {
       const message = {
         type: 'text',
         author: 'them',
+        is_chatbot: true,
         data: { text: welcomeMessage }
       }
 
@@ -168,6 +169,7 @@ class Chat extends React.Component {
             {
               author: 'them',
               type: 'text',
+              is_chatbot: true,
               data: {
                 text: welcomeMessage || '¡Bienvenido!'
               },
