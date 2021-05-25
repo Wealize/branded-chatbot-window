@@ -204,6 +204,7 @@ class Chat extends React.Component {
       isWebView,
       showEmoji,
       showFileIcon,
+      verticalQuickReplies
     } = this.props
     const { messageList, newMessagesCount } = this.state
 
@@ -222,6 +223,7 @@ class Chat extends React.Component {
         showFileIcon={showFileIcon}
         showStartButton={this.showStartButton.bind(this)}
         showWelcomeMessage={this.showWelcomeMessage.bind(this)}
+        verticalQuickReplies={verticalQuickReplies}
       />
     )
   }
@@ -240,6 +242,7 @@ Chat.propTypes = {
   showFileIcon: PropTypes.bool,
   startButton: PropTypes.string,
   userTimeout: PropTypes.number,
+  verticalQuickReplies: PropTypes.bool,
   welcomeMessage: PropTypes.string,
 }
 
@@ -250,6 +253,7 @@ Chat.defaultProps = {
   showEmoji: true,
   showFileIcon: true,
   userTimeout: 2147483647,
+  verticalQuickReplies: false
 }
 
 export default Chat
