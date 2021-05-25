@@ -11,6 +11,7 @@ const LauncherContainer = styled.div`
       return css`
         & .sc-launcher {
           z-index: 999999;
+          background-color: ${brandColor.rgb().string()};
         }
 
         & .sc-chat-window {
