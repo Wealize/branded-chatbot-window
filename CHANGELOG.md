@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Updating react-chat window version to 1.4.4]()
+- [Refinamiento webchat](https://wealize.atlassian.net/browse/MAL-245)
+    - [Theme](https://wealize.atlassian.net/browse/MAL-246)
+    - [Vertical menu](https://wealize.atlassian.net/browse/MAL-244)
 
 ## [1.5.6] - 2021-05-18
 
