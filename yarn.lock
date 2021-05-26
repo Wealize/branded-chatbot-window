@@ -1438,10 +1438,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@wealize/react-chat-window@1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.4.3.tgz#66d65df0a0fb76d14ce7225754de2e9e81f97315"
-  integrity sha512-qYB+3+JBkdQtGNf1okis0ynsdCmyo0OcZa+RJwTBrgesyP7YjIcSItLmOvNBgI6XZ99yA1kg4e5jLGtCw3rqKQ==
+"@wealize/react-chat-window@1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@wealize/react-chat-window/-/react-chat-window-1.4.4.tgz#483ceed31cd3e3bf72abd67720e754a86814c4d0"
+  integrity sha512-bOp78+tu3e3VXsSTRpBWlych+axQw42cDipYW8K5N2xPkdgU+b0yqDUE3kIK+W0l7hPzA1IwcsccbZoIBf4Czg==
   dependencies:
     "@babel/core" "^7.14.0"
     "@types/react-audio-player" "^0.11.0"
