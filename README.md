@@ -2,7 +2,7 @@
 
 ![version](https://img.shields.io/badge/version-1.5.4-blue)
 
-A simple chatbot window written in React and based on `react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
+A simple chatbot window written in React and based on `@wealize/react-chat-window` that lets your connect with a chatbot endpoint and themize the appearance of the chat to fit a branding.
 
 ## Usage
 
@@ -32,6 +32,8 @@ window.chatbotSettings = {
 |`showFileIcon`|`bool`|no|Whether or not to show the file button in the input bar. Defaults to `true`.|
 |`userTimeout`|`integer`|no|Number of seconds until a new conversation is created. Defaults to `2147483647`|
 |`isWebView`|`boolean`|no|Enable webchat for webview in apps. Defaults to `false`|
+|`theme`|`object`|no|Theme of the chatbot|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`brandColor`|`string`|Yes|Color of the brand|
 
 ## Releasing new versions
 
