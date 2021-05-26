@@ -204,12 +204,14 @@ class Chat extends React.Component {
       isWebView,
       showEmoji,
       showFileIcon,
+      theme,
       verticalQuickReplies
     } = this.props
     const { messageList, newMessagesCount } = this.state
 
     return (
       <Launcher
+        theme={theme}
         agentProfile={agentProfile}
         handleReadMessages={this._handleReadMessages.bind(this)}
         hideUserInputWithQuickReplies={hideUserInputWithQuickReplies}
@@ -241,6 +243,7 @@ Chat.propTypes = {
   showEmoji: PropTypes.bool,
   showFileIcon: PropTypes.bool,
   startButton: PropTypes.string,
+  theme: PropTypes.object,
   userTimeout: PropTypes.number,
   verticalQuickReplies: PropTypes.bool,
   welcomeMessage: PropTypes.string,
@@ -252,6 +255,7 @@ Chat.defaultProps = {
   isWebView: false,
   showEmoji: true,
   showFileIcon: true,
+  theme: {},
   userTimeout: 2147483647,
   verticalQuickReplies: false
 }
