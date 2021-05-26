@@ -5,7 +5,7 @@ import { Launcher } from '@wealize/react-chat-window'
 
 const LauncherContainer = styled.div`
   ${(props) => {
-    if (props.theme) {
+    if (props.theme.brandColor) {
       const brandColor = Color(props.theme.brandColor)
 
       return css`
@@ -56,6 +56,26 @@ const LauncherContainer = styled.div`
 
         & .sc-user-input--send-button.has-input:hover {
           background-color: ${brandColor.rgb().string()};
+        }
+
+        & .background{
+            fill: ${brandColor.rgb().string()};
+        }
+
+        & .ear{
+            fill: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
+        }
+
+        & .mouth{
+            fill: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
+        }
+
+        & .hair {
+            fill: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
+        }
+
+        & .shirt {
+            fill: ${brandColor.lighten(0.8).alpha(0.3).rgb().string()};
         }
       `
     } else {
